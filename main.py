@@ -1,3 +1,20 @@
+import json
+
+
+def save_applications(applications):
+    with open("applications.json", "w") as file:
+        json.dump(applications, file, indent=4)
+
+
+def load_applications():
+    try:
+        with open("applications.json", "r") as file:
+            return json.load(file)
+
+    except FileNotFoundError:
+        return []
+
+
 def add_application(applications):
     company = input("Enter Company Name: ")
     position = input("Enter Position: ")
@@ -6,6 +23,8 @@ def add_application(applications):
     application = {"company": company, "position": position, "status": status}
 
     applications.append(application)
+
+    save_applications(applications)
 
     print("Application added successfully!")
 
@@ -25,8 +44,7 @@ def view_applications(applications):
 
 def main():
 
-    applications = []
-
+    applications = load_applications()
     while True:
         print("Welcome to DevPath!")
 
